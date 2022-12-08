@@ -49,16 +49,28 @@ char* GenerateDebugMessage(const char* DEBUG_HEAD, const char* DEBUG_FOOT, const
     return buffer;
 }
 char* strcpy_u(const char* source) {
+    SET_STARTLINE; 
+    DEBUG_P(GenerateDebugMessage(DEBUG_HEAD, DEBUG_FOOT, "source: %s"), "strcpy_u", source, startline+FUNCT_LINE_OFFSET, FUNCT_LINE_OFFSET);
+
     char* buffer = static_cast<char*>(malloc(strlen(source)));
+    if (!buffer) {
+        DEBUG_P(GenerateDebugMessage(DEBUG_HEAD, DEBUG_FOOT, "failed to create buffer \n\treturned (NULL)"), "strcpy_u", FUNCT_LINE_OFFSET, startline + FUNCT_LINE_OFFSET);
+        return NULL;
+    }
     size_t i = 0;
     size_t len = 1;
-    if (!buffer) return NULL; 
     while (source[i]) {
         buffer[i] = source[i];
         ++i;
         ++len;
     }
-    if (len > strlen(source)) return NULL; 
+    if (i > strlen(source)) {
+        DEBUG_P(DEBUG_HEAD, "strcpy_u");
+        DEBUG_P("length is greater than allocated space\n\treturning (NULL)");
+        DEBUG_P("len %llu\n\tspace %llu", i, strlen(source));
+        DEBUG_P(DEBUG_FOOT, FUNCT_LINE_OFFSET - 3, startline+FUNCT_LINE_OFFSET);
+        return NULL;
+    }
     //msvs says possible buffer overflow but that is not possible because of 
     //above if statement
     buffer[len] = 0; 
