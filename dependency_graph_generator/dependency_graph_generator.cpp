@@ -5,6 +5,8 @@
 #include <cstring>
 #include <cstdio>
 #include <vector>
+const char* DEBUG_HEAD = "DEBUG(%s) :\n\t";
+const char* DEBUG_FOOT = "\non line %llu (funct : %llu)\n";
 #ifdef _DEBUG
 #define DEBUG_P printf
 #define SET_STARTLINE  auto startline = __LINE__+1
@@ -17,6 +19,35 @@
 
 constexpr size_t MAX_LINE_LENG   = 256;
 constexpr size_t MAX_FOLDER_LENG = 3072; 
+char* GenerateDebugMessage(const char* DEBUG_HEAD, const char* DEBUG_FOOT, const char* type) {
+    const size_t len = (strlen(DEBUG_HEAD) + strlen(DEBUG_FOOT) - 2) + strlen(type);
+    //bufferlen(type) inludes the null char so we don't have to add to this because it already \
+    has the space for the null terminator. 
+    char* buffer = (char*)malloc(len);
+    if (!buffer) return NULL;
+
+    for (size_t z = 0; z < len; z++) {
+        buffer[z] = 0;
+    }
+    size_t i = 0;
+    while (DEBUG_HEAD[i]) {
+        buffer[i] = DEBUG_HEAD[i++];
+    }
+    size_t t = 0;
+    while (type[t]) {
+        buffer[i] = type[t];
+        i++;
+        t++;
+    }
+    size_t y = 0;
+    while (DEBUG_FOOT[y]) {
+        buffer[i] = DEBUG_FOOT[y];
+        i++;
+        y++;
+    }
+    buffer[i] = 0;
+    return buffer;
+}
 char* strcpy_u(const char* source) {
     char* buffer = static_cast<char*>(malloc(strlen(source)));
     size_t i = 0;
