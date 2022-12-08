@@ -58,11 +58,10 @@ char* strcpy_u(const char* source) {
         return NULL;
     }
     size_t i = 0;
-    size_t len = 1;
     while (source[i]) {
         buffer[i] = source[i];
         ++i;
-        ++len;
+
     }
     if (i > strlen(source)) {
         DEBUG_P(DEBUG_HEAD, "strcpy_u");
@@ -73,7 +72,7 @@ char* strcpy_u(const char* source) {
     }
     //msvs says possible buffer overflow but that is not possible because of 
     //above if statement
-    buffer[len] = 0; 
+    buffer[i] = 0; 
     return buffer; 
 }
 char* getFolderFromFilePath(const char* filepath, const char  slashChar,  size_t leng) {
