@@ -50,6 +50,23 @@ char* GenerateDebugMessage(const char* message) {
     buffer[i] = 0;
     return buffer;
 }
+char* getNthParentFolderFromPath(const char* path, size_t n, bool useForwardSlash = true) {
+    SET_STARTLINE; 
+    char* buffer = (char*)malloc(strlen(path));
+    if (buffer == NULL) {
+        DEBUG_P(GenerateDebugMessage( "Unable to create buffer"), "getNthParentFolderFromPath", __LINE__, FUNCT_LINE_OFFSET);
+        return NULL; 
+    }
+    size_t ptrindex = 0, numberOfFolders = 0; 
+    while (path[ptrindex] && numberOfFolders <= n) {
+        buffer[ptrindex] = path[ptrindex]; 
+        ptrindex++; 
+        if ((useForwardSlash && path[ptrindex] == '/') || (!useForwardSlash && path[ptrindex] == '\\')) {
+            numberOfFolders++; 
+        }
+    }
+    return buffer; 
+}
 char* strcpy_u(const char* source) {
     SET_STARTLINE; 
     DEBUG_P(GenerateDebugMessage("source: %s"), "strcpy_u", source, __LINE__, FUNCT_LINE_OFFSET);
