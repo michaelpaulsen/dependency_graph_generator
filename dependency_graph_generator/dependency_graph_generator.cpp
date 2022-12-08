@@ -118,7 +118,6 @@ char* getAllButFirstChar(const char *str, const size_t len) {
     }
     return buffer; 
 }
-void parseFile(char* path, std::vector<char*>& pathQue) {
 char* getFileNameFromPath(const char* path, const char slashChar, const size_t len) {
     char* tmp = strcpy_u(path);
 
@@ -161,7 +160,7 @@ void parseFile(const char path[], std::vector<char*>& pathQue) {
                 char* directive = getAllButFirstChar(tmp, MAX_LINE_LENG);
                 char* param = strtok_s(NULL, " ", &cntx);
 
-                if (directive) {
+                if (directive && param) {
                     if (param[0] != '<') {
                         printf("%llu : %s -> %s", lineNumber, directive, param);
 
