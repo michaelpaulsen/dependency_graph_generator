@@ -8,6 +8,22 @@
 
 constexpr size_t MAX_LINE_LENG   = 256;
 constexpr size_t MAX_FOLDER_LENG = 3072; 
+char* strcpy_u(const char* source) {
+    char* buffer = static_cast<char*>(malloc(strlen(source)));
+    size_t i = 0;
+    size_t len = 1;
+    if (!buffer) return NULL; 
+    while (source[i]) {
+        buffer[i] = source[i];
+        ++i;
+        ++len;
+    }
+    if (len > strlen(source)) return NULL; 
+    //msvs says possible buffer overflow but that is not possible because of 
+    //above if statement
+    buffer[len] = 0; 
+    return buffer; 
+}
 char* getFolderFromFilePath(const char* filepath, const char  slashChar,  size_t leng) {
     size_t i = 0; 
     size_t lastslashPos = 0;
