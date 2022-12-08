@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dependency_graph_generator", "dependency_graph_generator\dependency_graph_generator.vcxproj", "{8CADDA4C-E600-4FB6-985C-D19D7CBA7A8D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8CADDA4C-E600-4FB6-985C-D19D7CBA7A8D}.Debug|x64.ActiveCfg = Debug|x64
+		{8CADDA4C-E600-4FB6-985C-D19D7CBA7A8D}.Debug|x64.Build.0 = Debug|x64
+		{8CADDA4C-E600-4FB6-985C-D19D7CBA7A8D}.Debug|x86.ActiveCfg = Debug|Win32
+		{8CADDA4C-E600-4FB6-985C-D19D7CBA7A8D}.Debug|x86.Build.0 = Debug|Win32
+		{8CADDA4C-E600-4FB6-985C-D19D7CBA7A8D}.Release|x64.ActiveCfg = Release|x64
+		{8CADDA4C-E600-4FB6-985C-D19D7CBA7A8D}.Release|x64.Build.0 = Release|x64
+		{8CADDA4C-E600-4FB6-985C-D19D7CBA7A8D}.Release|x86.ActiveCfg = Release|Win32
+		{8CADDA4C-E600-4FB6-985C-D19D7CBA7A8D}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32FB6E7D-3125-406E-85A1-974272D3D5FD}
+	EndGlobalSection
+EndGlobal
