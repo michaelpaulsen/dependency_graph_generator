@@ -2,21 +2,27 @@
 #include <cstring>
 #include <cstdio>
 #include <vector>
-const char* DEBUG_HEAD = "DEBUG(%s) :\n\t";
-const char* DEBUG_FOOT = "\non line %llu (funct : %llu)\n";
 #ifdef _DEBUG
-#define DEBUG_P printf
-#define SET_STARTLINE  auto startline = __LINE__+1
-#define FUNCT_LINE_OFFSET __LINE__ - startline
+    #define DEBUG_P printf
+    #define SET_STARTLINE  auto startline = __LINE__+1
+    #define FUNCT_LINE_OFFSET __LINE__ - startline
+    #ifndef DEBUG_HEAD
+        #define DEBUG_HEAD  "DEBUG(%s) :\n\t"
+    #endif // !DEBUG_HEAD
+    #ifndef DEBUG_FOOT
+        #define DEBUG_FOOT  "\non line %llu (funct : %llu)\n"
+    #endif // !DEBUG_FOOT
 #else
-#define DEBUG_P 
-#define SET_STARTLINE 
-#define FUNCT_LINE_OFFSET 0
+    #define DEBUG_P 
+    #define SET_STARTLINE 
+    #define FUNCT_LINE_OFFSET 0
+    #define DEBUG_HEAD  " "
+    #define DEBUG_FOOT  " "
 #endif // DEBUG
 constexpr size_t MAX_LINE_LENG   = 256;
 constexpr size_t MAX_FOLDER_LENG = 3072; 
-char* GenerateDebugMessage(const char* DEBUG_HEAD, const char* DEBUG_FOOT, const char* type) {
-    const size_t len = (strlen(DEBUG_HEAD) + strlen(DEBUG_FOOT) - 2) + strlen(type);
+char* GenerateDebugMessage(const char* message) {
+    const size_t len = (strlen(DEBUG_HEAD) + strlen(DEBUG_FOOT) - 2) + strlen(message);
     //bufferlen(type) inludes the null char so we don't have to add to this because it already \
     has the space for the null terminator. 
     char* buffer = (char*)malloc(len);
@@ -30,8 +36,8 @@ char* GenerateDebugMessage(const char* DEBUG_HEAD, const char* DEBUG_FOOT, const
         buffer[i] = DEBUG_HEAD[i++];
     }
     size_t t = 0;
-    while (type[t]) {
-        buffer[i] = type[t];
+    while (message[t]) {
+        buffer[i] = message[t];
         i++;
         t++;
     }
@@ -46,10 +52,10 @@ char* GenerateDebugMessage(const char* DEBUG_HEAD, const char* DEBUG_FOOT, const
 }
 char* strcpy_u(const char* source) {
     SET_STARTLINE; 
-    DEBUG_P(GenerateDebugMessage(DEBUG_HEAD, DEBUG_FOOT, "source: %s"), "strcpy_u", source, startline+FUNCT_LINE_OFFSET, FUNCT_LINE_OFFSET);
+    DEBUG_P(GenerateDebugMessage("source: %s"), "strcpy_u", source, __LINE__, FUNCT_LINE_OFFSET);
     char* buffer = static_cast<char*>(malloc(strlen(source)));
     if (!buffer) {
-        DEBUG_P(GenerateDebugMessage(DEBUG_HEAD, DEBUG_FOOT, "failed to create buffer \n\treturned (NULL)"), "strcpy_u", FUNCT_LINE_OFFSET, startline + FUNCT_LINE_OFFSET);
+        DEBUG_P(GenerateDebugMessage("failed to create buffer \n\treturned (NULL)"), "strcpy_u", __LINE__, FUNCT_LINE_OFFSET);
         return NULL;
     }
     size_t i = 0;
@@ -58,10 +64,8 @@ char* strcpy_u(const char* source) {
         ++i;
     }
     if (i > strlen(source)) {
-        DEBUG_P(DEBUG_HEAD, "strcpy_u");
-        DEBUG_P("length is greater than allocated space\n\treturning (NULL)");
-        DEBUG_P("len %llu\n\tspace %llu", i, strlen(source));
-        DEBUG_P(DEBUG_FOOT, FUNCT_LINE_OFFSET - 3, startline+FUNCT_LINE_OFFSET);
+        DEBUG_P(GenerateDebugMessage("ran out of space to write to string\n\tstrlen : %llu alocated space %llu"),  " strcpy_u", i, strlen(buffer), __LINE__, FUNCT_LINE_OFFSET);
+     
         return NULL;
     }
     //msvs says possible buffer overflow but that is not possible because of 
@@ -167,7 +171,6 @@ int main(int argc, char* argv[])
         perror("please pass in a entry point to begin in");
         return -1;
     }
-    GenerateDebugMessage(DEBUG_HEAD, DEBUG_FOOT, "s");
     printf("\n\n\n");
     std::vector<char*> filePathQue;
     const char* path = argv[1];
