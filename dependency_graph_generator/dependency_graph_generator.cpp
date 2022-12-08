@@ -73,13 +73,13 @@ char* strcpy_u(const char* source) {
     buffer[i] = 0; 
     return buffer; 
 }
-char* getFolderFromFilePath(const char* filepath, const char  slashChar,  size_t leng) {
+char* getFolderFromFilePath(const char* filepath,  size_t leng, bool useForwardSlash = true) {
     size_t i = 0; 
     size_t lastslashPos = 0;
     char* tmp = static_cast<char*>(malloc(leng)); 
     if (!tmp) return NULL; 
     while (filepath[i]) {
-        if (filepath[i] == slashChar) {
+        if ((useForwardSlash && filepath[i] == '/') || (!useForwardSlash && filepath[i] == '\\')) {
             lastslashPos = i; 
         }
         i++;
@@ -111,10 +111,16 @@ char* getAllButFirstChar(const char *str, const size_t len) {
     }
     return buffer; 
 }
-char* getFileNameFromPath(const char* path, const char slashChar, const size_t len) {
+char* getFileNameFromPath(const char* path, const size_t len, bool useforwardSlash = true) {
     char* tmp = strcpy_u(path);
     size_t i = 0; 
-    char delim[2] = { slashChar, 0 };
+    char delim[2] = { 0 };
+    if (useforwardSlash) {
+        delim[0] = '/';
+    }
+    else {
+        delim[0] = '\\';
+    }
     char* cntx = (char*) malloc(len); 
     char* tmpToken = strtok_s(tmp, delim, &cntx);
     char* token = strcpy_u(tmpToken);
@@ -125,23 +131,23 @@ char* getFileNameFromPath(const char* path, const char slashChar, const size_t l
     }
     return NULL; 
 }
-size_t getNumberOfFoldersInPath(const char *str, char slashChar) {
+size_t getNumberOfFoldersInPath(const char * filepath, bool useForwardSlash = true) {
     size_t numberOfFolders = 0; 
     size_t i = 0; 
     
-    while(str[i])
+    while(filepath[i])
     {
-        if (str[i] == slashChar) numberOfFolders++;
+        if ((useForwardSlash && filepath[i] == '/') || (!useForwardSlash && filepath[i] == '\\')) numberOfFolders++;
         i++;
     }
     return numberOfFolders; 
 }
-void parseFile(const char path[], std::vector<char*>& pathQue) {
+void parseFile(const char path[], std::vector<char*>& pathQue, bool useForwardSlash = true) {
     FILE* file;
     size_t lineNumber = 1;
     fopen_s(&file, path, "r");
     if (file) {
-        const char* ROOT_FOLDER = getFolderFromFilePath(path, '\\', MAX_FOLDER_LENG);
+        const char* ROOT_FOLDER = getFolderFromFilePath(path, MAX_FOLDER_LENG, useForwardSlash);
         char line[MAX_LINE_LENG];
 
         while (fgets(line, MAX_LINE_LENG, file)) {
