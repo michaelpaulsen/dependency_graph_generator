@@ -1,6 +1,3 @@
-// dependency_graph_generator.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <memory>
 #include <cstring>
 #include <cstdio>
@@ -16,7 +13,6 @@ const char* DEBUG_FOOT = "\non line %llu (funct : %llu)\n";
 #define SET_STARTLINE 
 #define FUNCT_LINE_OFFSET 0
 #endif // DEBUG
-
 constexpr size_t MAX_LINE_LENG   = 256;
 constexpr size_t MAX_FOLDER_LENG = 3072; 
 char* GenerateDebugMessage(const char* DEBUG_HEAD, const char* DEBUG_FOOT, const char* type) {
@@ -51,7 +47,6 @@ char* GenerateDebugMessage(const char* DEBUG_HEAD, const char* DEBUG_FOOT, const
 char* strcpy_u(const char* source) {
     SET_STARTLINE; 
     DEBUG_P(GenerateDebugMessage(DEBUG_HEAD, DEBUG_FOOT, "source: %s"), "strcpy_u", source, startline+FUNCT_LINE_OFFSET, FUNCT_LINE_OFFSET);
-
     char* buffer = static_cast<char*>(malloc(strlen(source)));
     if (!buffer) {
         DEBUG_P(GenerateDebugMessage(DEBUG_HEAD, DEBUG_FOOT, "failed to create buffer \n\treturned (NULL)"), "strcpy_u", FUNCT_LINE_OFFSET, startline + FUNCT_LINE_OFFSET);
@@ -61,7 +56,6 @@ char* strcpy_u(const char* source) {
     while (source[i]) {
         buffer[i] = source[i];
         ++i;
-
     }
     if (i > strlen(source)) {
         DEBUG_P(DEBUG_HEAD, "strcpy_u");
@@ -80,7 +74,6 @@ char* getFolderFromFilePath(const char* filepath, const char  slashChar,  size_t
     size_t lastslashPos = 0;
     char* tmp = static_cast<char*>(malloc(leng)); 
     if (!tmp) return NULL; 
-    //char* buffer = static_cast<char*>(malloc(leng)); 
     while (filepath[i]) {
         if (filepath[i] == slashChar) {
             lastslashPos = i; 
@@ -98,7 +91,6 @@ char* getFolderFromFilePath(const char* filepath, const char  slashChar,  size_t
     if (buffer) {
         for (size_t i = 0; i <= strlen(tmp); i++)
         {
-            
             buffer[i] = tmp[i]; 
         }
     }
@@ -117,13 +109,11 @@ char* getAllButFirstChar(const char *str, const size_t len) {
 }
 char* getFileNameFromPath(const char* path, const char slashChar, const size_t len) {
     char* tmp = strcpy_u(path);
-
     size_t i = 0; 
     char delim[2] = { slashChar, 0 };
     char* cntx = (char*) malloc(len); 
     char* tmpToken = strtok_s(tmp, delim, &cntx);
     char* token = strcpy_u(tmpToken);
-
     while (tmpToken) {
         tmpToken = strtok_s(NULL, delim, &cntx);
 
@@ -181,6 +171,5 @@ int main(int argc, char* argv[])
     printf("\n\n\n");
     std::vector<char*> filePathQue;
     const char* path = argv[1];
-    parseFile(path, filePathQue);
-    
+    parseFile(path, filePathQue); 
 }
