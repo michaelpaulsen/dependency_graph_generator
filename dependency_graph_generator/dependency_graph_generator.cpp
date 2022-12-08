@@ -120,6 +120,22 @@ char* getAllButFirstChar(const char str[], size_t len) {
     return buffer; 
 }
 void parseFile(char* path, std::vector<char*>& pathQue) {
+char* getFileNameFromPath(const char* path, const char slashChar, const size_t len) {
+    char* tmp = strcpy_u(path);
+
+    size_t i = 0; 
+    char delim[2] = { slashChar, 0 };
+    char* cntx = (char*) malloc(len); 
+    char* tmpToken = strtok_s(tmp, delim, &cntx);
+    char* token = strcpy_u(tmpToken);
+
+    while (tmpToken) {
+        tmpToken = strtok_s(NULL, delim, &cntx);
+
+        if(tmpToken) token = strcpy_u(tmpToken);
+    }
+    return NULL; 
+}
     FILE* file;
     size_t lineNumber = 1;
     fopen_s(&file, path, "r");
