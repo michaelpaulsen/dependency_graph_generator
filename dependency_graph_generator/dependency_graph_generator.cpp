@@ -108,7 +108,7 @@ char* getFolderFromFilePath(const char* filepath, const char  slashChar,  size_t
 
 
 
-char* getAllButFirstChar(const char str[], size_t len) {
+char* getAllButFirstChar(const char *str, const size_t len) {
     char* buffer = static_cast<char*>(malloc(len)); 
     if(buffer){
         for (size_t i = 1; i < len; i++)
