@@ -1,8 +1,11 @@
 // dependency_graph_generator.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
+#include <memory>
+#include <cstring>
 #include <cstdio>
+constexpr size_t MAX_LINE_LENG   = 256;
+constexpr size_t MAX_FOLDER_LENG = 3072; 
 int main(int argc, char* argv[])
 {
     if (argc < 2) {
