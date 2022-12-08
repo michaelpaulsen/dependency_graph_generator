@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <vector>
 #include "DEBUG.h"
-#include "stringThings.h"
+#include "PathStuff.h"
 constexpr size_t MAX_LINE_LENG   = 256;
 constexpr size_t MAX_FOLDER_LENG = 3072; 
 char* getAllButFirstChar(const char* str, const size_t len) {
