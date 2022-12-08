@@ -4,6 +4,7 @@
 #include <memory>
 #include <cstring>
 #include <cstdio>
+#include <vector>
 
 constexpr size_t MAX_LINE_LENG   = 256;
 constexpr size_t MAX_FOLDER_LENG = 3072; 
@@ -49,6 +50,36 @@ char* getAllButFirstChar(const char str[], size_t len) {
         }
     }
     return buffer; 
+}
+void parseFile(char* path, std::vector<char*>& pathQue) {
+    FILE* file;
+    size_t lineNumber = 1;
+    fopen_s(&file, path, "r");
+    if (file) {
+        const char* ROOT_FOLDER = getFolderFromFilePath(path, '\\', MAX_FOLDER_LENG);
+        char line[MAX_LINE_LENG];
+
+        while (fgets(line, MAX_LINE_LENG, file)) {
+            char* cntx = static_cast<char*>(malloc(MAX_LINE_LENG));
+            if (line[0] == '#') { // this filters out all of the non pre-prosser directivs
+                char* tmp = strtok_s(line, " ", &cntx);
+                char* directive = getAllButFirstChar(tmp, MAX_LINE_LENG);
+                char* param = strtok_s(NULL, " ", &cntx);
+
+                if (directive) {
+                    if (param[0] != '<') {
+                        printf("%llu : %s -> %s", lineNumber, directive, param);
+
+                    }
+                }
+                else {
+                    fprintf(stderr, "unable to parse line %llu\n", lineNumber);
+                }
+            }
+            lineNumber++;
+        }
+        fclose(file);
+    }
 }
 int main(int argc, char* argv[])
 {
