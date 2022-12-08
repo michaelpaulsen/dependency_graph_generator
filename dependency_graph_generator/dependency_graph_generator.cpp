@@ -5,6 +5,15 @@
 #include <cstring>
 #include <cstdio>
 #include <vector>
+#ifdef _DEBUG
+#define DEBUG_P printf
+#define SET_STARTLINE  auto startline = __LINE__+1
+#define FUNCT_LINE_OFFSET __LINE__ - startline
+#else
+#define DEBUG_P 
+#define SET_STARTLINE 
+#define FUNCT_LINE_OFFSET 0
+#endif // DEBUG
 
 constexpr size_t MAX_LINE_LENG   = 256;
 constexpr size_t MAX_FOLDER_LENG = 3072; 
