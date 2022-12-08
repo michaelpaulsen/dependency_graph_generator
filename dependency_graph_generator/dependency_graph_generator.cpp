@@ -6,6 +6,16 @@
 #include <cstdio>
 constexpr size_t MAX_LINE_LENG   = 256;
 constexpr size_t MAX_FOLDER_LENG = 3072; 
+char* getAllButFirstChar(const char str[], size_t len) {
+    char* buffer = static_cast<char*>(malloc(len)); 
+    if(buffer){
+        for (size_t i = 1; i < len; i++)
+        {
+            buffer[i-1] = str[i];
+        }
+    }
+    return buffer; 
+}
 int main(int argc, char* argv[])
 {
     if (argc < 2) {
