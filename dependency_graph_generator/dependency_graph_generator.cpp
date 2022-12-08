@@ -181,7 +181,11 @@ int main(int argc, char* argv[])
         perror("please pass in a entry point to begin in");
         return -1; 
     }
-    printf("opening %s for reading", argv[1]);
-
+    GenerateDebugMessage(DEBUG_HEAD, DEBUG_FOOT, "s");
+    printf("\n\n\n");
+    std::vector<char*> filePathQue;
+    const char path[] = "C:\\Users\\Skele\\source\\repos\\dependency_graph_generator\\dependency_graph_generator\\dependency_graph_generator.cpp"; 
+    printf("opening %s for reading\n\n", path);
+    parseFile(path, filePathQue);
+    
 }
-
