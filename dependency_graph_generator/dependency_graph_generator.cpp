@@ -105,9 +105,6 @@ char* getFolderFromFilePath(const char* filepath, const char  slashChar,  size_t
     free(tmp);
     return buffer; 
 }
-
-
-
 char* getAllButFirstChar(const char *str, const size_t len) {
     char* buffer = static_cast<char*>(malloc(len)); 
     if(buffer){
@@ -162,8 +159,7 @@ void parseFile(const char path[], std::vector<char*>& pathQue) {
 
                 if (directive && param) {
                     if (param[0] != '<') {
-                        printf("%llu : %s -> %s", lineNumber, directive, param);
-
+                        printf("%llu : %s -> %s\n", lineNumber, directive, param);
                     }
                 }
                 else {
@@ -179,13 +175,12 @@ int main(int argc, char* argv[])
 {
     if (argc < 2) {
         perror("please pass in a entry point to begin in");
-        return -1; 
+        return -1;
     }
     GenerateDebugMessage(DEBUG_HEAD, DEBUG_FOOT, "s");
     printf("\n\n\n");
     std::vector<char*> filePathQue;
-    const char path[] = "C:\\Users\\Skele\\source\\repos\\dependency_graph_generator\\dependency_graph_generator\\dependency_graph_generator.cpp"; 
-    printf("opening %s for reading\n\n", path);
+    const char* path = argv[1];
     parseFile(path, filePathQue);
     
 }
