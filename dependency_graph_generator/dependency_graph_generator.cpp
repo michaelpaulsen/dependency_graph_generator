@@ -131,13 +131,7 @@ char* getAllButFirstChar(const char *str, const size_t len) {
 char* getFileNameFromPath(const char* path, const size_t len, bool useforwardSlash = true) {
     char* tmp = strcpy_u(path);
     size_t i = 0; 
-    char delim[2] = { 0 };
-    if (useforwardSlash) {
-        delim[0] = '/';
-    }
-    else {
-        delim[0] = '\\';
-    }
+    const char* delim = useforwardSlash ? "/" : "\\"; 
     char* cntx = (char*) malloc(len); 
     char* tmpToken = strtok_s(tmp, delim, &cntx);
     char* token = strcpy_u(tmpToken);
