@@ -136,6 +136,18 @@ char* getFileNameFromPath(const char* path, const char slashChar, const size_t l
     }
     return NULL; 
 }
+size_t getNumberOfFoldersInPath(const char *str, char slashChar) {
+    size_t numberOfFolders = 0; 
+    size_t i = 0; 
+    
+    while(str[i])
+    {
+        if (str[i] == slashChar) numberOfFolders++;
+        i++;
+    }
+    return numberOfFolders; 
+}
+void parseFile(const char path[], std::vector<char*>& pathQue) {
     FILE* file;
     size_t lineNumber = 1;
     fopen_s(&file, path, "r");
